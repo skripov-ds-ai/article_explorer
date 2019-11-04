@@ -10,5 +10,5 @@ TODO:
 - custom sorting of articles
 - similar articles search
 
-![PIC1](screenshots/pic1.png)
-![PIC2](screenshots/pic2.png)
+![PIC1](screenshots/pic1.png | width=250)
+![PIC2](screenshots/pic2.png | width=250)
