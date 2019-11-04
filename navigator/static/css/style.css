@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "McLaren-Regular";
+    src: url("../fonts/McLaren/McLaren-Regular.ttf");
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#brand {
+    font-size: 26px;
+    font-family: "McLaren-Regular", Arial, sans-serif;
+}
+
+#brand:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-arxiv {
+    color: #b41435;
+}
+
+.link-arxiv:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header {
+    font-size: 20px;
+    background-color: crimson;
+    color: wheat;
+    height: auto;
+    /*margin: 0;*/
+    padding-bottom: 1%;
+    padding-left: 10px;
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+header span {
+    padding-right: 15px;
+}
+
+.similar {
+    padding-left: 10px;
+}
+
+body {
+    padding-top: 55px;
+    /*background-color: #cbdec9;*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+    /*padding-top: 100px;*/
+    margin: 0;
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+    background-color: aliceblue;
+}
+
+#feed {
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+    height: 100%;
+}
+
+.title {
+    font-size: 18px;
+    color: #3e50c4;
+}
+
+.view {
+    padding-left: 15px;
+    padding-top: 15px;
+}
