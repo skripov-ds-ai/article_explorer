@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  flask:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./:/opt/article_explorer
+    ports:
+      - 0.0.0.0:7777:5000
