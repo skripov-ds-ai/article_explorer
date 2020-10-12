@@ -13,7 +13,7 @@ services:
       - 0.0.0.0:7777:5000
 
   db:
-    image: "postgres"
+    image: postgres:13.0-alpine
     env_file:
       - db.env
     volumes:
