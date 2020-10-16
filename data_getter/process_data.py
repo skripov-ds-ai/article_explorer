@@ -1,7 +1,7 @@
 from navigator.models import Article, Author, Category
-from navigator import db
 from data_getter.parse_categories import categories_to_long_name
 from data_getter.download_preview import get_result, fill_template
+import logging
 
 # from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import orm
@@ -33,6 +33,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 def transaction_single_article(datum):
+    from navigator import db
     authors = datum.get('authors')
     for author_name in authors:
         author = Author(name=author_name)
@@ -97,25 +98,9 @@ def transaction_single_article(datum):
         db.session.rollback()
 
 
-# db.session.rollback()
-data = []
-for cat in [
-    'math.CT'
-    'stat.TH',
-    'stat.ML',
-    'math.QA',
-    'math.MP',
-    'eess.IV',
-    'math.CA',
-    'math.FA'
-]:
-    print(fill_template(cat, 700, 100))
-    data1 = get_result(cat, 700, 100)
-    data.extend(data1)
 
-from tqdm import tqdm
-for datum in tqdm(data):
-    transaction_single_article(datum)
+
+# db.session.rollback()
 
 
 

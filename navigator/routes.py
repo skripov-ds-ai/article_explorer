@@ -8,6 +8,8 @@ from navigator.models import Article
 @app.route('/')
 def index():
     articles = Article.query.order_by(Article.updated.desc())#.limit(30)#func.random()).limit(10).all()
+    # if articles :
+    #     articles = None
     return render_template('index.html', articles=articles)
 
 

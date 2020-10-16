@@ -15,13 +15,14 @@ author_2_article = db.Table(
 )
 
 
+# TODO: make good primary key!!!
 class Article(db.Model):
     __tablename__ = 'articles'
-    id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.Text(), unique=True)
-    title = db.Column(db.String(200), index=True)
+    title = db.Column(db.String(200), index=True, primary_key=True)
     summary = db.Column(db.Text(), index=True)
-    published = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    published = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
     updated = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     categories = db.relationship("Category", secondary=category_2_article)#backref='category', lazy='dynamic')
     authors = db.relationship("Author", secondary=author_2_article)#backref='author', lazy='dynamic')
