@@ -1,26 +1,24 @@
 from __future__ import absolute_import
+import time
+import random
 # from celery.app.control import Inspect
 # from flask_celeryext import FlaskCeleryExt
 from celery import Celery
 from celery.schedules import crontab
 from navigator import app
 from datetime import timedelta
-from data_getter.process_data import *
-
-
-
-# CELERY_TASK_LIST = [
-#     'data_getter.process_database',
-# ]
-from config import CELERY_BROKER_URL
-db_session = None
+from data_getter.process_data import get_result, transaction_single_article
+from data_getter.parse_categories import categories_to_long_name
 
 
 def make_celery(app):
-    celery = Celery("getter", backend=app.config['CELERY_BACKEND'],
-                    broker=app.config['CELERY_BROKER_URL'])
-    celery.conf.update(app.config)
-    TaskBase = celery.Task
+    celery_app = Celery(
+        "getter",
+        backend=app.config['CELERY_BACKEND'],
+        broker=app.config['CELERY_BROKER_URL']
+    )
+    celery_app.conf.update(app.config)
+    TaskBase = celery_app.Task
 
     class ContextTask(TaskBase):
         abstract = True
@@ -29,79 +27,31 @@ def make_celery(app):
             with app.app_context():
                 return TaskBase.__call__(self, *args, **kwargs)
 
+    celery_app.Task = ContextTask
+    return celery_app
 
 
-    celery.Task = ContextTask
-    return celery
-
-app.config['CELERY_BACKEND'] = "redis://redis:6379/0"
-app.config['CELERY_BROKER_URL'] = "redis://redis:6379/0"
-
-# app.config['CELERYBEAT_SCHEDULE'] = {
-# }
-# app.config['CELERY_TIMEZONE'] = 'UTC'
-
-celery = make_celery(app)
+celery_app = make_celery(app)
 
 
-
-
-# celery_app = FlaskCeleryExt(app)
-# celery_app = Celery(
-#     app.import_name,
-#     broker=app.config['CELERY_BROKER_URL'],
-#     # include=CELERY_TASK_LIST
-# )
-# celery_app.conf.timezone = 'UTC'
-# celery_app.conf.CELERY_REDIS_SCHEDULER_URL = app.config['CELERY_BROKER_URL']
-# celery_app.conf.CELERY_REDIS_SCHEDULER_KEY_PREFIX = app.config['CELERY_BROKER_URL']
-#
-# # celery_app.config_from_object()
-# celery_app.conf.update(app.config)
-@celery.task()
-def load_data_task():
+@celery_app.task()
+def load_data_task(start, max_results):
     data = []
-    for cat in [
-        'math.CT'
-        'stat.TH',
-        'stat.ML',
-        'math.QA',
-        'math.MP',
-        'eess.IV',
-        'math.CA',
-        'math.FA'
-    ]:
-        # print(fill_template(cat, 700, 100))
-        data1 = get_result(cat, 5, 5)
+    for cat in categories_to_long_name.keys():
+        time.sleep(3.5 + random.random())
+        # print(fill_template(cat, start, max_results))
+        data1 = get_result(cat, start, max_results)
         data.extend(data1)
 
     for datum in data:
-        # logging.info(datum)
         transaction_single_article(datum)
 
 
-celery.conf.beat_schedule = {
+celery_app.conf.beat_schedule = {
     'load_data_task1': {
         'task': 'data_getter.celery.load_data_task',
-        'schedule': timedelta(minutes=5),
-        # 'args': (),
+        'schedule': crontab(hour=10, minute=10),
+        'args': (0, 100),
     },
 }
-celery.conf.timezone = 'UTC'
-# TaskBase = celery_app.Task
-#
-#
-# class ContextTask(TaskBase):
-#     abstract = True
-#
-#     def __call__(self, *args, **kwargs):
-#         with app.app_context():
-#             return TaskBase.__call__(self, *args, **kwargs)
-#
-#
-# celery_app.Task = ContextTask
-# celery_app.app = app
-
-# celery.autodiscover_tasks()
-# i = Inspect()
-# print(10*"===", i.registered_tasks())
+celery_app.conf.timezone = 'UTC'

@@ -155,8 +155,8 @@ stat.ME	Methodology
 stat.ML	Machine Learning
 stat.OT	Other Statistics
 stat.TH	Statistics Theory"""
-# with open('../static/text/categories.txt', 'r') as f:
-#     data = list(map(lambda x: x.strip().split('\t'), f.readlines()))
+with open('categories.txt', 'r') as f:
+    data = list(map(lambda x: x.strip().split('\t'), f.readlines()))
 data = list(map(lambda x: x.strip().split('\t'), s.split("\n")))
 
 categories_to_long_name = dict(data)

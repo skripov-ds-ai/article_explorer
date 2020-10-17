@@ -24,14 +24,14 @@ services:
       context: .
       dockerfile: db/Dockerfile
     restart: always
-#    env_file:
-#      - .env
-    environment:
-      POSTGRES_USER: navigator
-      POSTGRES_PASSWORD: qwerty2
-      POSTGRES_HOST: db
-      POSTGRES_DB: explorer
-      PG_DATA: /pg_data
+    env_file:
+      - .env
+#    environment:
+#      POSTGRES_USER: navigator
+#      POSTGRES_PASSWORD: qwerty2
+#      POSTGRES_HOST: db
+#      POSTGRES_DB: explorer
+#      PG_DATA: /pg_data
     volumes:
       - pg_data:/pg_data
 #      - /var/lib/postgresql/data/

@@ -7,7 +7,6 @@ from flask_misaka import Misaka
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config['CELERY_BROKER_URL'] = CELERY_BROKER_URL
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 md = Misaka(math=True, math_explicit=True)
