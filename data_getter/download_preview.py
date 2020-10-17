@@ -29,6 +29,7 @@ def get_info_from_entry(entry):
     authors = list(map(lambda x: x.strip(), authors))
 
     d = {
+        'id'
         'url': url,
         'updated': updated,
         'published': published,

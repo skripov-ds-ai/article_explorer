@@ -1,5 +1,5 @@
 from flask import Flask
-from config import Config
+from config import Config, CELERY_BROKER_URL
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_misaka import Misaka

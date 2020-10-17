@@ -1,0 +1,74 @@
+version: '3.7'
+
+volumes:
+   pg_data:
+
+services:
+  flask:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./:/opt/article_explorer
+      - ./logs:/opt/logs
+    ports:
+      - 127.0.0.1:5000:5000
+    depends_on:
+      - db
+
+  db:
+#    image: postgres:13.0-alpine
+    build:
+      context: .
+      dockerfile: db/Dockerfile
+    restart: always
+    env_file:
+      - .env
+#    environment:
+#      POSTGRES_USER: navigator
+#      POSTGRES_PASSWORD: qwerty2
+#      POSTGRES_HOST: db
+#      POSTGRES_DB: explorer
+#      PG_DATA: /pg_data
+    volumes:
+      - pg_data:/pg_data
+#      - /var/lib/postgresql/data/
+
+  redis:
+    image: redis:6.0.8
+    volumes:
+      - ./redis_data:/var/lib/redis/data
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./celery/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/opt/logs
+    depends_on:
+      - db
+      - redis
+
+#  dashboard:
+#    build: ./project
+#    command:  flower -A core --port=5555 --broker=redis://redis:6379/0
+#    ports:
+#      - 5555:5555
+#    environment:
+#      - DEBUG=1
+#      - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
+#      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+#      - CELERY_BROKER=redis://redis:6379/0
+#      - CELERY_BACKEND=redis://redis:6379/0
+#    depends_on:
+#      - web
+#      - redis
+#      - celery
+
+
+#volumes:
+#  postgres_data:
