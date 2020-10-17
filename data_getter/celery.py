@@ -36,21 +36,23 @@ celery_app = make_celery(app)
 
 @celery_app.task()
 def load_data_task(start, max_results):
-    data = []
+    # data = []
     for cat in categories_to_long_name.keys():
         time.sleep(3.5 + random.random())
         # print(fill_template(cat, start, max_results))
         data1 = get_result(cat, start, max_results)
-        data.extend(data1)
+        for datum in data1:
+            transaction_single_article(datum)
+        # data.extend(data1)
 
-    for datum in data:
-        transaction_single_article(datum)
+    # for datum in data:
+    #     transaction_single_article(datum)
 
 
 celery_app.conf.beat_schedule = {
     'load_data_task1': {
         'task': 'data_getter.celery.load_data_task',
-        'schedule': crontab(hour=10, minute=10),
+        'schedule': crontab(hour=10, minute=17),
         'args': (0, 100),
     },
 }
