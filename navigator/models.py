@@ -15,6 +15,7 @@ author_2_article = db.Table(
 )
 
 
+# TODO: make good primary key!!!
 class Article(db.Model):
     __tablename__ = 'articles'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,8 +24,8 @@ class Article(db.Model):
     summary = db.Column(db.Text(), index=True)
     published = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     updated = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    categories = db.relationship("Category", secondary=category_2_article)#backref='category', lazy='dynamic')
-    authors = db.relationship("Author", secondary=author_2_article)#backref='author', lazy='dynamic')
+    categories = db.relationship("Category", secondary=category_2_article)
+    authors = db.relationship("Author", secondary=author_2_article)
 
     def __repr__(self):
         return '<Article {}>'.format(self.title)
