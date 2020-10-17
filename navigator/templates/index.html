@@ -5,75 +5,77 @@
 {% endblock %}
 
 {% block body %}
-    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-      <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-      </div>
-    </div>
-
-    <script>
-      $(function () {
-        $("#datetimepicker1").datetimepicker({
-            {#isRTL: false,#}
-            minView: 2,
-            format: 'DD.MM.YYYY',
-            {#autoclose:true,#}
-            language: 'ru'
-        });
-      });
-    </script>
-
-{#    <div id="feed">#}
-{#    {% for article in articles %}#}
-{#    <div class="view">#}
-{#        <div class="title">#}
-{#            <a href="/article/{{ article.id }}">#}
-{#                {{ article.title | markdown }}#}
-{#            </a>#}
-{#        </div>#}
-{#        <div class="link-arxiv">#}
-{#            <a href="{{ article.url }}">Link to arxiv</a>#}
-{#        </div>#}
-{#        <br>#}
-{#        Updated: {{ article.updated }}#}
-{#        <br>#}
-{#        Published: {{ article.published }}#}
-{#        <br>#}
-{##}
-{#        <br>#}
-{#        Authors:#}
-{#        {% for author in article.authors %}#}
-{#            <span>#}
-{#                {{ author.name }}#}
-{#            {% if loop.index < loop.length %}#}
-{#            ,#}
-{#            {% endif %}#}
-{#            </span>#}
-{#        {% endfor %}#}
-{#        <br>#}
-{##}
-{#        Categories:#}
-{#        {% for category in article.categories %}#}
-{#            <span class="category" title="{{ category.name }}">#}
-{##}
-{#            <a title="{{ category.name }}">#}
-{#                {{ category.small_name }}#}
-{#            </a>#}
-{#                {% if loop.index < loop.length %}#}
-{#                ,#}
-{#                {% endif %}#}
-{#            </span>#}
-{#        {% endfor %}#}
-{#    <p>#}
-{#        <br>#}
-{#            {{ article.summary | markdown }}#}
-{#    </p>#}
+{#    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">#}
+{#      <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>#}
+{#      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">#}
+{#        <div class="input-group-text"><i class="fa fa-calendar"></i></div>#}
+{#      </div>#}
 {#    </div>#}
-{#        {% if loop.index < loop.length %}#}
-{#            <hr>#}
-{#        {% endif %}#}
-{##}
-{#    {% endfor %}#}
+
+{#    <script>#}
+{#      $(function () {#}
+{#        $("#datetimepicker1").datetimepicker({#}
+            {#isRTL: false,#}
+{#            minView: 2,#}
+{#            format: 'DD.MM.YYYY',#}
+            {#autoclose:true,#}
+{#            language: 'ru'#}
+{#        });#}
+{#      });#}
+{#    </script>#}
+
+    <div id="feed">
+{#    {% if articles is not None %}#}
+    {% for article in articles %}
+    <div class="view">
+        <div class="title">
+            <a href="/article/{{ article.id }}">
+                {{ article.title | markdown }}
+            </a>
+        </div>
+        <div class="link-arxiv">
+            <a href="{{ article.url }}">Link to arxiv</a>
+        </div>
+        <br>
+        Updated: {{ article.updated }}
+        <br>
+        Published: {{ article.published }}
+        <br>
+
+        <br>
+        Authors:
+        {% for author in article.authors %}
+            <span>
+                {{ author.name }}
+            {% if loop.index < loop.length %}
+            ,
+            {% endif %}
+            </span>
+        {% endfor %}
+        <br>
+
+        Categories:
+        {% for category in article.categories %}
+            <span class="category" title="{{ category.name }}">
+
+            <a title="{{ category.name }}">
+                {{ category.small_name }}
+            </a>
+                {% if loop.index < loop.length %}
+                ,
+                {% endif %}
+            </span>
+        {% endfor %}
+    <p>
+        <br>
+            {{ article.summary | markdown }}
+    </p>
+    </div>
+        {% if loop.index < loop.length %}
+            <hr>
+        {% endif %}
+
+    {% endfor %}
+{#    {% endif %}#}
     </div>
 {% endblock %}

@@ -52,6 +52,10 @@ header a:hover {
     text-decoration: none;
 }
 
+header a {
+    color: inherit;
+}
+
 header span {
     padding-right: 15px;
 }
