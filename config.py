@@ -2,10 +2,10 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-POSTGRES_USER = os.getenv('POSTGRES_USER', None)
-POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', None)
-POSTGRES_URL = os.getenv('POSTGRES_URL', None)
-POSTGRES_DB = os.getenv('POSTGRES_DB', None)
+POSTGRES_USER = os.getenv('POSTGRES_USER', 'navigator')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'qwerty2')
+POSTGRES_URL = os.getenv('POSTGRES_URL', 'localhost:5432')
+POSTGRES_DB = os.getenv('POSTGRES_DB', 'explorer')
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', None)
 
 
@@ -20,4 +20,5 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CELERY_BACKEND = CELERY_BROKER_URL
     CELERY_BROKER_URL = CELERY_BROKER_URL
+    # FLASK_ADMIN_SWATCH = 'cerulean'
 
