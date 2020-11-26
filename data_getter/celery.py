@@ -52,7 +52,7 @@ def load_data_task(start, max_results):
 celery_app.conf.beat_schedule = {
     'load_data_task1': {
         'task': 'data_getter.celery.load_data_task',
-        'schedule': crontab(hour=10, minute=17),
+        'schedule': crontab(hour=21, minute=18),
         'args': (0, 100),
     },
 }

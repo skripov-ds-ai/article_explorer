@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+    {% from "bootstrap/pagination.html" import render_pagination %}
+
 {#    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">#}
 {#      <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>#}
 {#      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">#}
@@ -25,8 +27,8 @@
 {#    </script>#}
 
     <div id="feed">
-{#    {% if articles is not None %}#}
-    {% for article in articles %}
+    {% if articles %}
+    {% for article in articles.items %}
     <div class="view">
         <div class="title">
             <a href="/article/{{ article.id }}">
@@ -76,6 +78,11 @@
         {% endif %}
 
     {% endfor %}
-{#    {% endif %}#}
+
+    {% endif %}
+
     </div>
+
+    {{ render_pagination(articles) }}
+
 {% endblock %}

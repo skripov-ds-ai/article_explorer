@@ -15,7 +15,6 @@ author_2_article = db.Table(
 )
 
 
-# TODO: make good primary key!!!
 class Article(db.Model):
     __tablename__ = 'articles'
     id = db.Column(db.Integer, primary_key=True)
@@ -50,6 +49,11 @@ class Author(db.Model):
         return '<Author {}>'.format(self.name)
 
 
-
+# class UserRole(db.Model):
+#     pass
+#
+#
+# class User(db.Model):
+#     pass
 
 
